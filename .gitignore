@@ -1,0 +1,14 @@
+output/
+data/
+*.csv
+*.rds
+*.Rprofile
+*.png
+*.pdf
+*.jpg
+*.jpeg
+*.out
+*.err
+.Rhistory
+*.Rproj
+.Rproj.user
