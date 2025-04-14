@@ -15,28 +15,24 @@ library(R.utils)
 library(Matrix)
 library(SeuratWrappers)
 library(SingleCellExperiment)
+library(RColorBrewer)
 
 
 # Read in variables from sbatch -----------------
 args <- commandArgs(trailingOnly = TRUE)
 if ("--dim" %in% args) {
-  dimensions <- args[which(args == "--dim") + 1]
-  # make sure input is valid
-  if (!(is.numeric(dimensions))) {
-    stop("Error: Dimension must be numeric")
-  }
+  dimensions <- as.numeric(args[which(args == "--dim") + 1])
 } else {
   dimensions <- 20
 }
+print(paste("Dimensions:", dimensions))
+
 if ("--res" %in% args) {
-  resolution <- args[which(args == "--res") + 1]
-  # make sure input is valid
-  if (!(is.numeric)) {
-    stop("Error: Resolution must be numeric")
-  }
+  resolution <- as.numeric(args[which(args == "--res") + 1])
 } else {
   resolution <- 0.5
 }
+print(paste("Resolution:", resolution))
 
 
 # 1. Import Data ----
@@ -44,7 +40,7 @@ czi_combined <- readRDS(paste0("output/03_clustering_czi_dim_", dimensions, "_re
 czi_combined 
 
 # 2. Dimensional Reduction using UMAP ----
-czi_combined <- RunUMAP(czi_combined, dims = 1:20)
+czi_combined <- RunUMAP(czi_combined, dims = 1:dimensions)
 Idents(czi_combined) <- "seurat_clusters"
 table(Idents(czi_combined))
 

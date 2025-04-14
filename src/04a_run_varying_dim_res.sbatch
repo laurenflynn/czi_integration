@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #SBATCH --partition=bch-compute          
-#SBATCH --time=1:00:00         
+#SBATCH --time=16:00:00         
 #SBATCH --job-name=umap_vary_dim_res        
 #SBATCH --output=output/logs/03_04_output_%J.txt      
 #SBATCH --error=output/logs/03_04_error_%J.err # Name of the error file
 #SBATCH --nodes=1               # Number of nodes
 #SBATCH --ntasks=1              # Number of cpus
-#SBATCH --mem=24G
+#SBATCH --mem=200G
 
 
 source /programs/biogrids.shrc
