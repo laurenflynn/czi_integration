@@ -5,3 +5,9 @@
 - 01a_run_integration.sbatch
 
 - 02_post_integration_pca.R
+
+- 03_clustering.R
+
+- 04_dim_reduction.R
+
+- 04a_run_varying_dim_res.sbatch
