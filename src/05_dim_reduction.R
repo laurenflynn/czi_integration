@@ -45,7 +45,7 @@ Idents(czi_combined) <- "seurat_clusters"
 table(Idents(czi_combined))
 
 # 3. Plot Landscape ----
-DimPlot(czi_combined, reduction = "umap", raster = FALSE, cols = "polychrome")
+DimPlot(czi_combined, reduction = "umap", raster = TRUE, cols = "polychrome")
 ggsave(paste0("output/05_figures/unlabeled_umap_by_cluster_dim_", dimensions, "_res_", resolution, ".png"))
 DimPlot(czi_combined, reduction = "umap", raster = FALSE, cols = "polychrome", label = TRUE)
 ggsave(paste0("output/05_figures/labeled_umap_by_cluster_dim_", dimensions, "_res_", resolution, ".png"))
@@ -54,9 +54,9 @@ ggsave(paste0("output/05_figures/labeled_umap_by_cluster_dim_", dimensions, "_re
 n_sample <- length(unique(czi_combined$orig.ident))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 DimPlot(czi_combined,
-  reduction = "umap", raster = FALSE,
+  reduction = "umap", raster = TRUE,
   cols = getPalette(n_sample), group.by = "updated_sample_id",
-  split.by = "updated_sample_id"
+  split.by = "sex"
 )
 ggsave(paste0("output/05_figures/umap_by_id_dim_", dimensions, "_res_", resolution, ".png"))
 
