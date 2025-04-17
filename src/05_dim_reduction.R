@@ -36,7 +36,7 @@ print(paste("Resolution:", resolution))
 
 
 # 1. Import Data ----
-czi_combined <- readRDS(paste0("output/03_clustering_czi_dim_", dimensions, "_res_", resolution, ".rds"))
+czi_combined <- readRDS(paste0("output/04_clustering/04_clustering_czi_dim_", dimensions, "_res_", resolution, ".rds"))
 czi_combined 
 
 # 2. Dimensional Reduction using UMAP ----
@@ -46,27 +46,27 @@ table(Idents(czi_combined))
 
 # 3. Plot Landscape ----
 DimPlot(czi_combined, reduction = "umap", raster = FALSE, cols = "polychrome")
-ggsave(paste0("output/04_figures/unlabeled_umap_by_cluster_dim_", dimensions, "_res_", resolution, ".png"))
+ggsave(paste0("output/05_figures/unlabeled_umap_by_cluster_dim_", dimensions, "_res_", resolution, ".png"))
 DimPlot(czi_combined, reduction = "umap", raster = FALSE, cols = "polychrome", label = TRUE)
-ggsave(paste0("output/04_figures/labeled_umap_by_cluster_dim_", dimensions, "_res_", resolution, ".png"))
+ggsave(paste0("output/05_figures/labeled_umap_by_cluster_dim_", dimensions, "_res_", resolution, ".png"))
 
 ##  Sample ID ----
 n_sample <- length(unique(czi_combined$orig.ident))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 DimPlot(czi_combined,
   reduction = "umap", raster = FALSE,
-  cols = getPalette(n_sample), group.by = "orig.ident",
-  split.by = "orig.ident"
+  cols = getPalette(n_sample), group.by = "updated_sample_id",
+  split.by = "updated_sample_id"
 )
-ggsave(paste0("output/04_figures/umap_by_id_dim_", dimensions, "_res_", resolution, ".png"))
+ggsave(paste0("output/05_figures/umap_by_id_dim_", dimensions, "_res_", resolution, ".png"))
 
 ##  Round ----
 DimPlot(czi_combined,
   reduction = "umap", raster = TRUE,
-  cols = c("1" = "#c9dee2", "2" = "#efcfd1"), group.by = "Round",
-  split.by = "Round"
+  cols = c("1" = "#c9dee2", "2" = "#efcfd1"), group.by = "round",
+  split.by = "round"
 )
-ggsave(paste0("output/04_figures/umap_by_round_dim_", dimensions, "_res_", resolution, ".png"))
+ggsave(paste0("output/05_figures/umap_by_round_dim_", dimensions, "_res_", resolution, ".png"))
 
 ##  Genetics ----
 DimPlot(czi_combined,
@@ -92,11 +92,11 @@ DimPlot(czi_combined,
     "SMPD1" = "#569ec9",
     "Unknown" = "#201f48"
   ),
-  group.by = "Genetics"
+  group.by = "genetics"
 )
 
-ggsave(paste0("output/04_figures/umap_by_gene_dim_", dimensions, "_res_", resolution, ".png"))
+ggsave(paste0("output/05_figures/umap_by_gene_dim_", dimensions, "_res_", resolution, ".png"))
 
 
 # 4. Saving Data ----
-saveRDS(czi_combined, file = paste0("output/04_czi_dim_reduction_dim_", dimensions, "_res_", resolution, ".rds"))
+saveRDS(czi_combined, file = paste0("output/05_dim_reduction/05_czi_dim_reduction_dim_", dimensions, "_res_", resolution, ".rds"))

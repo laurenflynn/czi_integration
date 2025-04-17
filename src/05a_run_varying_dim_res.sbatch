@@ -19,7 +19,7 @@ do
   for res in 0.5 0.25
   do
     echo "Resolution: $res"
-    Rscript src/03_clustering.R  --dim $dim --res $res
-    Rscript src/04_dim_reduction.R  --dim $dim --res $res
+    Rscript src/04_clustering.R  --dim $dim --res $res
+    Rscript src/05_dim_reduction.R  --dim $dim --res $res
   done
 done

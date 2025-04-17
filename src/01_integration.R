@@ -21,7 +21,7 @@ library(SingleCellExperiment)
 # Set variables ----
 
 input_data_dir <- "data/biopsy_samples/qc_pass"
-output_file_name <- "output/integrated_biopsy_samples.rds"
+output_file_name <- "output/01_integrated_biopsy_samples.rds"
 
 ## Read data ------
 

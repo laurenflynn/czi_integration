@@ -12,3 +12,5 @@ data/
 .Rhistory
 *.Rproj
 .Rproj.user
+src/00_generate_metadata.R
+src/han/

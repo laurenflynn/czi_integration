@@ -14,6 +14,8 @@ library(Matrix)
 library(SeuratWrappers)
 library(SingleCellExperiment)
 
+input_file_name <-"output/03_post_integration_pca.rds"
+
 # Read in variables from sbatch -----------------
 args <- commandArgs(trailingOnly = TRUE)
 if ("--dim" %in% args) {
@@ -30,8 +32,8 @@ if ("--res" %in% args) {
 print(paste("Resolution:", resolution))
 
 # 1. Import Data ----
-czi_combined <- readRDS("output/02_post_integration_pca.rds")
-czi_combined # 66481
+czi_combined <- readRDS(input_file_name)
+czi_combined 
 
 
 
@@ -60,7 +62,7 @@ czi_combined <- FindClusters(czi_combined, resolution = resolution)
 
 
 # 3. Saving Data ----
-saveRDS(czi_combined, file = paste0("output/03_clustering_czi_dim_", dimensions, "_res_", resolution, ".rds"))
+saveRDS(czi_combined, file = paste0("output/04_clustering_czi_dim_", dimensions, "_res_", resolution, ".rds"))
 
 
 

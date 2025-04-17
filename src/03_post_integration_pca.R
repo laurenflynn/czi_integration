@@ -1,5 +1,5 @@
 # Script to generate pca
-
+set.seed(123)
 
 # Load libraries ----
 library(dplyr)
@@ -20,32 +20,16 @@ library(SingleCellExperiment)
 library(data.table)
 library(plyr)
 
+input_file_name <- "output/02_integrated_biopsy_samples_metadata_updated.rds"
+output_file_name <- "output/03_post_integration_pca.rds"
+
 # Read data from integration ----
-czi_combined <- readRDS("output/integrated_biopsy_samples.rds") # 1750 features
+czi_combined <- readRDS(input_file_name)
 
 ## Convert active assay to 'integrated' for scaling ----
 DefaultAssay(czi_combined) <- "integrated"
 czi_combined
-unique(czi_combined$orig.ident)
-
-# Metadata ------
-## Genes of each patient -----
-genetics <- fread("data/czi_genetics.csv")
-genetics$Sample <- gsub("-", "_", genetics$Sample) # Make sure formatting is consistent
-czi_combined$Genetics <- Idents(czi_combined) # Add genetics column to metadata
-head(czi_combined@meta.data)
-czi_combined$Genetics <- plyr::mapvalues(
-  czi_combined$Genetics,
-  from = genetics$Sample,
-  to = genetics$Genetics
-)
-
-czi_combined$Round <- Idents(czi_combined)
-czi_combined$Round <- plyr::mapvalues(
-  czi_combined$Round,
-  from = genetics$Sample,
-  to = genetics$Round
-)
+unique(czi_combined$updated_sample_id)
 
 # Scale data ----
 # During Scaling we can regress out unwanted effects shown in the code below.
@@ -72,5 +56,5 @@ DimHeatmap(czi_combined, dims = 21:30, cells = 1000, balanced = TRUE)
 
 # Save Data ----
 
-saveRDS(czi_combined, file = "output/02_post_integration_pca.rds")
+saveRDS(czi_combined, file = output_file_name)
 
