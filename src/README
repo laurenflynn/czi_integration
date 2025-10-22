@@ -1,7 +1,0 @@
-## Files
-
-- 01_integration.R
-
-- 01a_run_integration.sbatch
-
-- 02_post_integration_pca.R

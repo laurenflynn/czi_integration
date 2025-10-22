@@ -14,6 +14,8 @@ library(Matrix)
 library(SeuratWrappers)
 library(SingleCellExperiment)
 
+input_file_name <-"output/03_post_integration_pca.rds"
+
 # Read in variables from sbatch -----------------
 args <- commandArgs(trailingOnly = TRUE)
 if ("--dim" %in% args) {
@@ -30,15 +32,15 @@ if ("--res" %in% args) {
 print(paste("Resolution:", resolution))
 
 # 1. Import Data ----
-czi_combined <- readRDS("output/02_post_integration_pca.rds")
-czi_combined # 66481
+czi_combined <- readRDS(input_file_name)
+czi_combined 
 
 
 
 
 # 2. Processing the Data ----
 ## 2-1) Find Neighbors ----
-czi_combined <- FindNeighbors(czi_combined, dims = dimensions)
+czi_combined <- FindNeighbors(czi_combined, dims = 1:dimensions)
 # The FindNeighbors function constructs a K-nearest neighbor graph using the first 30 principal components.
 # This KNN graph captures the similarity in gene expression profiles among cells, considering the variance and patterns represented by these 30 PCs.
 # Constructing this similarity network is essential for subsequent clustering, enabling the identification of cell communities with shared expression profiles."
@@ -55,12 +57,14 @@ czi_combined <- FindClusters(czi_combined, resolution = resolution)
 # Lower resolution: This will produce fewer clusters by merging similar cell groups. It can be useful when you want to focus on broader categories or major cell populations.
 # However, setting the resolution too low might overlook some important cell types or states.
 
+# 3) Run UMAP -----
+czi_combined <- RunUMAP(czi_combined, dims = 1:dimensions)
 
 
 
 
 # 3. Saving Data ----
-saveRDS(czi_combined, file = paste0("output/03_clustering_czi_dim_", dimensions, "_res_", resolution, ".rds"))
+saveRDS(czi_combined, file = paste0("output/04_clustering/04_clustering_umap_czi_dim_", dimensions, "_res_", resolution, ".rds"))
 
 
 
